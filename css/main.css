@@ -73,6 +73,7 @@ body {
     opacity: 1;
 }
 
+/* знімає з картинки всі події*/
 .btn-action img {
   pointer-events: none;
 }
