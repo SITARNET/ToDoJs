@@ -10,6 +10,9 @@ form.addEventListener('submit', addTask);
 // видалення завдання
 tasksList.addEventListener('click', deleteTask);
 
+// відмічаємо завдання відміченими
+tasksList.addEventListener('click', doneTask);
+
 // функції
 function addTask (event) {
     // відміняємо відправку форми
@@ -55,5 +58,14 @@ function deleteTask (event) {
     // якщо є одне завдання, то показуємо блок Список завдань пустий
     if (tasksList.children.length === 1) {
         emptyList.classList.remove('none');
+    }
+}
+
+function doneTask (event) {
+    // перевіряємо чи був клік по кнопці Завдання виповнено
+    if (event.target.dataset.action === "done") {
+        const parentNode = event.target.closest('.list-group-item');
+        const taskTitle = parentNode.querySelector('.task-title');
+        taskTitle.classList.toggle('task-title--done');
     }
 }
