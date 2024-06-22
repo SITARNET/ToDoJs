@@ -48,12 +48,12 @@ function addTask (event) {
 }
 
 function deleteTask (event) {
+    // перевіряємо якщо клік був Не по кнопці Видалити завдання
+    if (event.target.dataset.action !== 'delete') return
+
     // перевіряємо що клік був по кнопці Видалити завдання
-    if (event.target.dataset.action === 'delete') {
-        const parenNode = event.target.closest('.list-group-item');
-        console.log(parenNode);
-        parenNode.remove();
-    }
+    const parenNode = event.target.closest('.list-group-item');
+    parenNode.remove();
 
     // якщо є одне завдання, то показуємо блок Список завдань пустий
     if (tasksList.children.length === 1) {
@@ -62,10 +62,12 @@ function deleteTask (event) {
 }
 
 function doneTask (event) {
+
+    // перевіряємо чи клік був Не по кнопці Завдання виповнено
+    if (event.target.dataset.action !== "done") return
+
     // перевіряємо чи був клік по кнопці Завдання виповнено
-    if (event.target.dataset.action === "done") {
-        const parentNode = event.target.closest('.list-group-item');
-        const taskTitle = parentNode.querySelector('.task-title');
-        taskTitle.classList.toggle('task-title--done');
-    }
+    const parentNode = event.target.closest('.list-group-item');
+    const taskTitle = parentNode.querySelector('.task-title');
+    taskTitle.classList.toggle('task-title--done');
 }
