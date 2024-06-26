@@ -96,3 +96,8 @@ body {
   /* left: 0; */
   /* right: 0; */
 }
+
+.form-control {
+  border-color: #005cbf;
+  border-width: 3px;
+}
