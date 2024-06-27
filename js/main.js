@@ -5,6 +5,7 @@ const tasksList = document.querySelector('#tasksList');
 const emptyList = document.querySelector('#emptyList');
 
 let tasks = [];
+checkEmptyList();
 
 // додаємо завдання
 form.addEventListener('submit', addTask);
@@ -55,10 +56,7 @@ function addTask (event) {
     taskInput.value = "";
     taskInput.focus();
 
-    // якщо є більше одного завдання, то скриваємо блок Список завдань пустий
-    if (tasksList.children.length > 1) {
-        emptyList.classList.add('none');
-    }
+    checkEmptyList();
 }
 
 function deleteTask (event) {
@@ -92,10 +90,7 @@ function deleteTask (event) {
 
     parenNode.remove();
 
-    // якщо є одне завдання, то показуємо блок Список завдань пустий
-    if (tasksList.children.length === 1) {
-        emptyList.classList.remove('none');
-    }
+    checkEmptyList();
 }
 
 function doneTask (event) {
@@ -120,4 +115,19 @@ function doneTask (event) {
 
     const taskTitle = parentNode.querySelector('.task-title');
     taskTitle.classList.toggle('task-title--done');
+}
+
+function checkEmptyList() {
+    if (tasks.length === 0) {
+        const emptyListHTML = `<li id="emptyList" class="list-group-item empty-list">
+        <img src="./img/leaf.svg" alt="Empty" width="48" class="mt-3">
+        <div class="empty-list__title">Список завдань пустий</div>
+        </li>`;
+        tasksList.insertAdjacentHTML('afterbegin', emptyListHTML);
+    }
+
+    if (tasks.length > 0) {
+        const emptyListEl = document.querySelector('#emptyList');
+        emptyListEl ? emptyListEl.remove() : null;
+    }
 }
