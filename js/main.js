@@ -11,10 +11,6 @@ if (localStorage.getItem('tasks')) {
     tasks.forEach((task) => renderTask(task));
 }
 
-// tasks.forEach(function (task) {
-//     renderTask(task);
-// })
-
 checkEmptyList();
 
 // додаємо завдання
@@ -66,22 +62,6 @@ function deleteTask (event) {
     // знаходимо ID завдання
     const id = Number(parenNode.id);
 
-    // знаходимо індекс завдання у масиві
-    // const index = tasks.findIndex(function (task) {
-    //     return task.id === id;
-    // })
-
-    // стрілкова функція
-    //const index = tasks.findIndex((task) => task.id === id);
-
-    // видаляємо завдання з масиву з завданнями
-    //tasks.splice(index, 1);
-
-    // видалення завдання за допомогою сортування
-    //tasks = tasks.filter(function (task) {
-    //    return task.id === id;
-    //})
-
     // стрілкова функція
     tasks = tasks.filter((task) => task.id !== id);
 
@@ -104,12 +84,6 @@ function doneTask (event) {
 
     // знаходимо id завдання
     const id = Number(parentNode.id);
-
-    // const task = tasks.find(function(task) {
-    //     if (task.id === id) {
-    //         return true;
-    //     }
-    // });
 
     const task = tasks.find( (task) => task.id === id);
     task.done = !task.done;
