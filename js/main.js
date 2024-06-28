@@ -8,29 +8,12 @@ let tasks = [];
 
 if (localStorage.getItem('tasks')) {
     tasks = JSON.parse(localStorage.getItem('tasks'));
+    tasks.forEach((task) => renderTask(task));
 }
 
-tasks.forEach(function (task) {
-    // формуємо розмітку для нового завдання
-    const cssClass = task.done ? 'task-title task-title--done' : 'task-title';
-    
-    // генеруємо розмітку для нового завдання
-    const taskHTML = `<li id="${task.id}" class="list-group-item d-flex justify-content-between task-item">
-                        <span class="${cssClass}">${task.text}</span>
-                            <div class="task-item__buttons">
-                                <button type="button" data-action="done" class="btn-action">
-                                    <img src="./img/tick.svg" alt="Done" width="18" height="18">
-                                </button>
-                                <button type="button" data-action="delete" class="btn-action">
-                                <img src="./img/cross.svg" alt="Done" width="18" height="18">
-                                </button>
-                            </div>
-                    </li>`;
-                    
-    // додаємо завдання на сторінку
-    tasksList.insertAdjacentHTML('beforeend', taskHTML);
-
-})
+// tasks.forEach(function (task) {
+//     renderTask(task);
+// })
 
 checkEmptyList();
 
@@ -63,24 +46,8 @@ function addTask (event) {
     // зберігаємо список завдань у сховище браузера LocalStorage
     saveToLocalStorage();
 
-    // формуємо розмітку для нового завдання
-    const cssClass = newTask.done ? 'task-title task-title--done' : 'task-title';
-    
-    // генеруємо розмітку для нового завдання
-    const taskHTML = `<li id="${newTask.id}" class="list-group-item d-flex justify-content-between task-item">
-                        <span class="${cssClass}">${newTask.text}</span>
-                            <div class="task-item__buttons">
-                                <button type="button" data-action="done" class="btn-action">
-                                    <img src="./img/tick.svg" alt="Done" width="18" height="18">
-                                </button>
-                                <button type="button" data-action="delete" class="btn-action">
-                                <img src="./img/cross.svg" alt="Done" width="18" height="18">
-                                </button>
-                            </div>
-                    </li>`;
-                    
-    // додаємо завдання на сторінку
-    tasksList.insertAdjacentHTML('beforeend', taskHTML);
+    // рендерім завдання на сторінці
+    renderTask(newTask);
 
     // видаляємо поле вводу та повертаємо на нього фокус
     taskInput.value = "";
@@ -171,4 +138,25 @@ function checkEmptyList() {
 
 function saveToLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify(tasks))
+}
+
+function renderTask(task) {
+    // формуємо розмітку для нового завдання
+    const cssClass = task.done ? 'task-title task-title--done' : 'task-title';
+    
+    // генеруємо розмітку для нового завдання
+    const taskHTML = `<li id="${task.id}" class="list-group-item d-flex justify-content-between task-item">
+                        <span class="${cssClass}">${task.text}</span>
+                            <div class="task-item__buttons">
+                                <button type="button" data-action="done" class="btn-action">
+                                    <img src="./img/tick.svg" alt="Done" width="18" height="18">
+                                </button>
+                                <button type="button" data-action="delete" class="btn-action">
+                                <img src="./img/cross.svg" alt="Done" width="18" height="18">
+                                </button>
+                            </div>
+                    </li>`;
+                    
+    // додаємо завдання на сторінку
+    tasksList.insertAdjacentHTML('beforeend', taskHTML);
 }
