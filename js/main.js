@@ -5,6 +5,33 @@ const tasksList = document.querySelector('#tasksList');
 const emptyList = document.querySelector('#emptyList');
 
 let tasks = [];
+
+if (localStorage.getItem('tasks')) {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+}
+
+tasks.forEach(function (task) {
+    // формуємо розмітку для нового завдання
+    const cssClass = task.done ? 'task-title task-title--done' : 'task-title';
+    
+    // генеруємо розмітку для нового завдання
+    const taskHTML = `<li id="${task.id}" class="list-group-item d-flex justify-content-between task-item">
+                        <span class="${cssClass}">${task.text}</span>
+                            <div class="task-item__buttons">
+                                <button type="button" data-action="done" class="btn-action">
+                                    <img src="./img/tick.svg" alt="Done" width="18" height="18">
+                                </button>
+                                <button type="button" data-action="delete" class="btn-action">
+                                <img src="./img/cross.svg" alt="Done" width="18" height="18">
+                                </button>
+                            </div>
+                    </li>`;
+                    
+    // додаємо завдання на сторінку
+    tasksList.insertAdjacentHTML('beforeend', taskHTML);
+
+})
+
 checkEmptyList();
 
 // додаємо завдання
@@ -32,6 +59,9 @@ function addTask (event) {
 
     // додаємо завдання в масив з завданнями
     tasks.push(newTask);
+
+    // зберігаємо список завдань у сховище браузера LocalStorage
+    saveToLocalStorage();
 
     // формуємо розмітку для нового завдання
     const cssClass = newTask.done ? 'task-title task-title--done' : 'task-title';
@@ -88,6 +118,10 @@ function deleteTask (event) {
     // стрілкова функція
     tasks = tasks.filter((task) => task.id !== id);
 
+    // зберігаємо список завдань у сховище браузера LocalStorage
+    saveToLocalStorage();
+
+    // видаляємо завдання із розмітки
     parenNode.remove();
 
     checkEmptyList();
@@ -113,6 +147,9 @@ function doneTask (event) {
     const task = tasks.find( (task) => task.id === id);
     task.done = !task.done;
 
+    // зберігаємо список завдань у сховище браузера LocalStorage
+    saveToLocalStorage();
+
     const taskTitle = parentNode.querySelector('.task-title');
     taskTitle.classList.toggle('task-title--done');
 }
@@ -130,4 +167,8 @@ function checkEmptyList() {
         const emptyListEl = document.querySelector('#emptyList');
         emptyListEl ? emptyListEl.remove() : null;
     }
+}
+
+function saveToLocalStorage() {
+    localStorage.setItem('tasks', JSON.stringify(tasks))
 }
